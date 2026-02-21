@@ -10,11 +10,16 @@ import { ContainsDuplicateVisualizer } from './visualizers/ContainsDuplicateVisu
 import { StockVisualizer } from './visualizers/StockVisualizer';
 import { MaxSubarrayVisualizer } from './visualizers/MaxSubarrayVisualizer';
 import { MajorityElementVisualizer } from './visualizers/MajorityElementVisualizer';
+import { ProductOfArrayVisualizer } from './visualizers/ProductOfArrayVisualizer';
+import { ContainerWithMostWaterVisualizer } from './visualizers/ContainerWithMostWaterVisualizer';
 import { BinarySearchVisualizer } from './visualizers/BinarySearchVisualizer';
+import { FindMinRotatedVisualizer } from './visualizers/FindMinRotatedVisualizer';
 import { LinkedListVisualizer } from './visualizers/LinkedListVisualizer';
 import { MergeSortedListsVisualizer } from './visualizers/MergeSortedListsVisualizer';
 import { StackVisualizer } from './visualizers/StackVisualizer';
 import { ClimbingStairsVisualizer } from './visualizers/ClimbingStairsVisualizer';
+import { HouseRobberVisualizer } from './visualizers/HouseRobberVisualizer';
+import { CoinChangeVisualizer } from './visualizers/CoinChangeVisualizer';
 import { TreeVisualizer } from './visualizers/TreeVisualizer';
 import { MaxDepthBinaryTreeVisualizer } from './visualizers/MaxDepthBinaryTreeVisualizer';
 import { SortVisualizer } from './visualizers/SortVisualizer';
@@ -25,7 +30,6 @@ interface VisualizationPanelProps {
   onInputChange: (newInput: Record<string, unknown>) => void;
 }
 
-// Route to the correct visualizer by problem ID
 function VisualizerForProblem({
   problemId,
   category,
@@ -36,28 +40,34 @@ function VisualizerForProblem({
   visualState: Record<string, unknown>;
 }) {
   switch (problemId) {
-    case 'two-sum':                       return <ArrayVisualizer visualState={visualState} />;
-    case 'contains-duplicate':            return <ContainsDuplicateVisualizer visualState={visualState} />;
-    case 'best-time-to-buy-stock':        return <StockVisualizer visualState={visualState} />;
-    case 'maximum-subarray':              return <MaxSubarrayVisualizer visualState={visualState} />;
-    case 'majority-element':              return <MajorityElementVisualizer visualState={visualState} />;
-    case 'binary-search':                 return <BinarySearchVisualizer visualState={visualState} />;
-    case 'reverse-linked-list':           return <LinkedListVisualizer visualState={visualState} />;
-    case 'merge-two-sorted-lists':        return <MergeSortedListsVisualizer visualState={visualState} />;
-    case 'valid-parentheses':             return <StackVisualizer visualState={visualState} />;
-    case 'climbing-stairs':               return <ClimbingStairsVisualizer visualState={visualState} />;
-    case 'inorder-traversal':             return <TreeVisualizer visualState={visualState} />;
-    case 'maximum-depth-binary-tree':     return <MaxDepthBinaryTreeVisualizer visualState={visualState} />;
-    case 'bubble-sort':                   return <SortVisualizer visualState={visualState} />;
+    case 'two-sum':                           return <ArrayVisualizer visualState={visualState} />;
+    case 'contains-duplicate':                return <ContainsDuplicateVisualizer visualState={visualState} />;
+    case 'best-time-to-buy-stock':            return <StockVisualizer visualState={visualState} />;
+    case 'maximum-subarray':                  return <MaxSubarrayVisualizer visualState={visualState} />;
+    case 'majority-element':                  return <MajorityElementVisualizer visualState={visualState} />;
+    case 'product-of-array-except-self':      return <ProductOfArrayVisualizer visualState={visualState} />;
+    case 'container-with-most-water':         return <ContainerWithMostWaterVisualizer visualState={visualState} />;
+    case 'binary-search':                     return <BinarySearchVisualizer visualState={visualState} />;
+    case 'find-minimum-rotated-sorted-array': return <FindMinRotatedVisualizer visualState={visualState} />;
+    case 'reverse-linked-list':               return <LinkedListVisualizer visualState={visualState} />;
+    case 'merge-two-sorted-lists':            return <MergeSortedListsVisualizer visualState={visualState} />;
+    case 'valid-parentheses':                 return <StackVisualizer visualState={visualState} />;
+    case 'climbing-stairs':                   return <ClimbingStairsVisualizer visualState={visualState} />;
+    case 'house-robber':                      return <HouseRobberVisualizer visualState={visualState} />;
+    case 'coin-change':                       return <CoinChangeVisualizer visualState={visualState} />;
+    case 'inorder-traversal':                 return <TreeVisualizer visualState={visualState} />;
+    case 'maximum-depth-binary-tree':         return <MaxDepthBinaryTreeVisualizer visualState={visualState} />;
+    case 'bubble-sort':                       return <SortVisualizer visualState={visualState} />;
     default:
       switch (category) {
-        case 'Arrays':          return <ArrayVisualizer visualState={visualState} />;
-        case 'Binary Search':   return <BinarySearchVisualizer visualState={visualState} />;
-        case 'Linked Lists':    return <LinkedListVisualizer visualState={visualState} />;
-        case 'Stacks':          return <StackVisualizer visualState={visualState} />;
-        case 'Trees':           return <TreeVisualizer visualState={visualState} />;
-        case 'Sorting':         return <SortVisualizer visualState={visualState} />;
-        default:                return <div className="text-gray-500 text-sm">No visualizer found</div>;
+        case 'Arrays':              return <ArrayVisualizer visualState={visualState} />;
+        case 'Binary Search':       return <BinarySearchVisualizer visualState={visualState} />;
+        case 'Linked Lists':        return <LinkedListVisualizer visualState={visualState} />;
+        case 'Stacks':              return <StackVisualizer visualState={visualState} />;
+        case 'Dynamic Programming': return <ClimbingStairsVisualizer visualState={visualState} />;
+        case 'Trees':               return <TreeVisualizer visualState={visualState} />;
+        case 'Sorting':             return <SortVisualizer visualState={visualState} />;
+        default:                    return <div className="text-gray-500 text-sm">No visualizer found</div>;
       }
   }
 }
