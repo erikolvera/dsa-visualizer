@@ -2,45 +2,92 @@
 
 An interactive data structures and algorithms visualizer built for learners preparing for technical interviews. Each problem features a step-by-step animated visualization, multi-language solution display, and an in-browser practice editor.
 
+🔗 **Live Demo:** [dsa-visualizer-ebon.vercel.app](https://dsa-visualizer-ebon.vercel.app)
+
+---
+
 ## Features
 
-- **13 Blind 75 problems** across Arrays, Binary Search, Linked Lists, Stacks, Dynamic Programming, Trees, and Sorting
-- **Step-by-step animations** — play/pause/step-forward/step-backward with configurable speed
-- **Multi-language support** — Python, JavaScript, Java, C++ with syntax highlighting
-- **Practice mode** — write your own solution in-browser and run test cases instantly (JS/Python)
+- **18 Blind 75 problems** across 7 categories — Arrays, Binary Search, Linked Lists, Stacks, Dynamic Programming, Trees, and Sorting
+- **Step-by-step animations** — play, pause, step forward/backward, and adjust speed (0.5x / 1x / 2x)
+- **Multi-language support** — Python, JavaScript, Java, and C++ with syntax highlighting and per-line execution highlighting
+- **Practice mode** — write your own solution in-browser and run it against automated test cases instantly (JS & Python)
 - **Custom input editor** — modify algorithm inputs and watch the visualization update live
-- **Collapsible sidebar** with problem categories
+- **Collapsible sidebar** — each category has a unique color accent and can be collapsed independently
+- **Difficulty tags** — Easy and Medium problems labeled throughout
+
+---
 
 ## Tech Stack
 
-- **React 19** + **TypeScript** — component-based UI with full type safety
-- **Vite** — instant HMR in development, optimized production builds
-- **Tailwind CSS v3** — utility-first dark-mode styling
-- **Framer Motion** — smooth step-transition animations
-- **prism-react-renderer** — syntax-highlighted code display and editor overlay
-- **Zustand** — lightweight global state for playback and language selection
-
-## Problems Covered
-
-| Category | Problems |
+| Tool | Purpose |
 |---|---|
-| Arrays | Two Sum, Contains Duplicate, Best Time to Buy/Sell Stock, Maximum Subarray, Majority Element |
-| Binary Search | Binary Search |
-| Linked Lists | Reverse Linked List, Merge Two Sorted Lists |
-| Stacks | Valid Parentheses |
-| Dynamic Programming | Climbing Stairs |
-| Trees | Binary Tree Inorder Traversal, Maximum Depth of Binary Tree |
-| Sorting | Bubble Sort |
+| **React 19** + **TypeScript** | Component-based UI with full type safety |
+| **Vite** | Instant HMR in development, optimized production builds |
+| **Tailwind CSS v3** | Utility-first dark-mode styling |
+| **Framer Motion** | Smooth step-transition and collapse animations |
+| **prism-react-renderer** | Syntax-highlighted code display and editor overlay |
+| **Zustand** | Lightweight global state for playback, language, and step navigation |
+
+---
+
+## Problems Covered (18 total)
+
+| Category | Problem | Difficulty |
+|---|---|---|
+| Arrays | Two Sum | Easy |
+| Arrays | Contains Duplicate | Easy |
+| Arrays | Best Time to Buy and Sell Stock | Easy |
+| Arrays | Maximum Subarray | Medium |
+| Arrays | Majority Element | Easy |
+| Arrays | Product of Array Except Self | Medium |
+| Arrays | Container With Most Water | Medium |
+| Binary Search | Binary Search | Easy |
+| Binary Search | Find Minimum in Rotated Sorted Array | Medium |
+| Linked Lists | Reverse Linked List | Easy |
+| Linked Lists | Merge Two Sorted Lists | Easy |
+| Stacks | Valid Parentheses | Easy |
+| Dynamic Programming | Climbing Stairs | Easy |
+| Dynamic Programming | House Robber | Medium |
+| Dynamic Programming | Coin Change | Medium |
+| Trees | Binary Tree Inorder Traversal | Easy |
+| Trees | Maximum Depth of Binary Tree | Easy |
+| Sorting | Bubble Sort | Easy |
+
+---
 
 ## Getting Started
 
 ```bash
+cd dsa-visualizer
 npm install
 npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) to view the app.
 
+---
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── CodePanel/          # Description, Solution, and Practice tabs
+│   ├── VisualizationPanel/ # Visualizers, controls, step annotations
+│   └── Sidebar.tsx         # Collapsible category navigation
+├── data/
+│   └── problems/           # Step generators + problem definitions (18 files)
+├── store/
+│   └── useProblemStore.ts  # Zustand global state
+├── utils/
+│   └── testRunner.ts       # Sandboxed in-browser code execution
+└── types/
+    └── index.ts            # Shared TypeScript interfaces
+```
+
+---
+
 ## Deployment
 
-This project is configured for Vercel deployment. Push to a GitHub repository and import it in the Vercel dashboard — zero configuration required.
+Deployed on Vercel. The `vercel.json` at the repo root handles SPA routing and subdirectory builds automatically — no manual configuration needed.
