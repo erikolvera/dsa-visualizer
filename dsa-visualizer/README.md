@@ -64,7 +64,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) to view the app.
+Or visit the live app at [dsa-visualizer-ebon.vercel.app](https://dsa-visualizer-ebon.vercel.app).
 
 ---
 
