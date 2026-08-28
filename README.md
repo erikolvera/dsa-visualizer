@@ -1,6 +1,6 @@
 # DSA Visualizer
 
-An interactive data structures and algorithms visualizer built for learners preparing for technical interviews. Each problem features a step-by-step animated visualization, multi-language solution display, and an in-browser practice editor.
+An interactive data structures and algorithms visualizer built for learners preparing for technical interviews. Each problem features a step-by-step animated visualization paired with a Python solution that highlights as the algorithm runs.
 
 🔗 **Live Demo:** [dsa-visualizer-ebon.vercel.app](https://dsa-visualizer-ebon.vercel.app)
 
@@ -10,8 +10,7 @@ An interactive data structures and algorithms visualizer built for learners prep
 
 - **18 Blind 75 problems** across 7 categories — Arrays, Binary Search, Linked Lists, Stacks, Dynamic Programming, Trees, and Sorting
 - **Step-by-step animations** — play, pause, step forward/backward, and adjust speed (0.5x / 1x / 2x)
-- **Multi-language support** — Python, JavaScript, Java, and C++ with syntax highlighting and per-line execution highlighting
-- **Practice mode** — write your own solution in-browser and run it against automated test cases instantly (JS & Python)
+- **Python solutions** — syntax highlighted, with per-line execution highlighting synced to the animation
 - **Custom input editor** — modify algorithm inputs and watch the visualization update live
 - **Collapsible sidebar** — each category has a unique color accent and can be collapsed independently
 - **Difficulty tags** — Easy and Medium problems labeled throughout
@@ -26,8 +25,8 @@ An interactive data structures and algorithms visualizer built for learners prep
 | **Vite** | Instant HMR in development, optimized production builds |
 | **Tailwind CSS v3** | Utility-first dark-mode styling |
 | **Framer Motion** | Smooth step-transition and collapse animations |
-| **prism-react-renderer** | Syntax-highlighted code display and editor overlay |
-| **Zustand** | Lightweight global state for playback, language, and step navigation |
+| **prism-react-renderer** | Syntax-highlighted code display |
+| **Zustand** | Lightweight global state for playback and step navigation |
 
 ---
 
@@ -44,7 +43,7 @@ An interactive data structures and algorithms visualizer built for learners prep
 | Arrays | Container With Most Water | Medium |
 | Binary Search | Binary Search | Easy |
 | Binary Search | Find Minimum in Rotated Sorted Array | Medium |
-| Linked Lists | Reverse Linked List | Easy |
+| Linked Lists | Reverse a Linked List | Easy |
 | Linked Lists | Merge Two Sorted Lists | Easy |
 | Stacks | Valid Parentheses | Easy |
 | Dynamic Programming | Climbing Stairs | Easy |
@@ -73,15 +72,13 @@ Or visit the live app at [dsa-visualizer-ebon.vercel.app](https://dsa-visualizer
 ```
 src/
 ├── components/
-│   ├── CodePanel/          # Description, Solution, and Practice tabs
+│   ├── CodePanel/          # Description and Solution tabs
 │   ├── VisualizationPanel/ # Visualizers, controls, step annotations
 │   └── Sidebar.tsx         # Collapsible category navigation
 ├── data/
 │   └── problems/           # Step generators + problem definitions (18 files)
 ├── store/
 │   └── useProblemStore.ts  # Zustand global state
-├── utils/
-│   └── testRunner.ts       # Sandboxed in-browser code execution
 └── types/
     └── index.ts            # Shared TypeScript interfaces
 ```

@@ -18,7 +18,7 @@ export function generateBinarySearchSteps(input: Record<string, unknown>): Step[
   steps.push({
     stepIndex: 0,
     description: `Binary search on [${nums.join(', ')}], target = ${target}. We maintain two pointers: left and right. Each step we compute mid and cut the search space in half.`,
-    highlightLines: { python: [2, 3], javascript: [2, 3], java: [3, 4], cpp: [8, 9] },
+    highlightLines: [2, 3],
     visualState: {
       nums, target, left: 0, right: nums.length - 1, mid: null,
       phase: 'init', resultIndex: null,
@@ -34,7 +34,7 @@ export function generateBinarySearchSteps(input: Record<string, unknown>): Step[
     steps.push({
       stepIndex: steps.length,
       description: `left=${left}, right=${right} → mid=${mid}, nums[mid]=${nums[mid]}. Compare with target ${target}.`,
-      highlightLines: { python: [4, 5], javascript: [4, 5], java: [5, 6], cpp: [10, 11] },
+      highlightLines: [4, 5],
       visualState: {
         nums, target, left, right, mid, phase: 'checking', resultIndex: null,
       } satisfies BinarySearchVisualState,
@@ -44,7 +44,7 @@ export function generateBinarySearchSteps(input: Record<string, unknown>): Step[
       steps.push({
         stepIndex: steps.length,
         description: `nums[${mid}] = ${nums[mid]} equals target! Return index ${mid}.`,
-        highlightLines: { python: [6, 7], javascript: [6, 7], java: [7, 8], cpp: [12, 13] },
+        highlightLines: [6, 7],
         visualState: {
           nums, target, left, right, mid, phase: 'found', resultIndex: mid,
         } satisfies BinarySearchVisualState,
@@ -54,7 +54,7 @@ export function generateBinarySearchSteps(input: Record<string, unknown>): Step[
       steps.push({
         stepIndex: steps.length,
         description: `nums[${mid}] = ${nums[mid]} < ${target}. Target is in the right half — move left pointer to mid+1 = ${mid + 1}.`,
-        highlightLines: { python: [8, 9], javascript: [8, 9], java: [9, 10], cpp: [14, 15] },
+        highlightLines: [8, 9],
         visualState: {
           nums, target, left, right: right, mid, phase: 'checking', resultIndex: null,
         } satisfies BinarySearchVisualState,
@@ -64,7 +64,7 @@ export function generateBinarySearchSteps(input: Record<string, unknown>): Step[
       steps.push({
         stepIndex: steps.length,
         description: `nums[${mid}] = ${nums[mid]} > ${target}. Target is in the left half — move right pointer to mid−1 = ${mid - 1}.`,
-        highlightLines: { python: [10, 11], javascript: [10, 11], java: [11, 12], cpp: [16, 17] },
+        highlightLines: [10, 11],
         visualState: {
           nums, target, left, right, mid, phase: 'checking', resultIndex: null,
         } satisfies BinarySearchVisualState,
@@ -76,7 +76,7 @@ export function generateBinarySearchSteps(input: Record<string, unknown>): Step[
   steps.push({
     stepIndex: steps.length,
     description: `left (${left}) > right (${right}) — search space exhausted. Target ${target} not found. Return −1.`,
-    highlightLines: { python: [12], javascript: [13], java: [14], cpp: [18] },
+    highlightLines: [12],
     visualState: {
       nums, target, left, right, mid: null, phase: 'not_found', resultIndex: null,
     } satisfies BinarySearchVisualState,
@@ -98,37 +98,10 @@ export const binarySearch: Problem = {
   ],
   defaultInput: { nums: [-1, 0, 3, 5, 9, 12], target: 9 },
   generateSteps: generateBinarySearchSteps,
-  testRunner: {
-    setup: '',
-    cases: [
-      { label: 'Target found',     inputDisplay: '[-1,0,3,5,9,12], target=9', callExpression: 'search([-1,0,3,5,9,12], 9)',  expectedDisplay: '4',  expectedValue: 4  },
-      { label: 'Target not found', inputDisplay: '[-1,0,3,5,9,12], target=2', callExpression: 'search([-1,0,3,5,9,12], 2)',  expectedDisplay: '-1', expectedValue: -1 },
-      { label: 'Single element',   inputDisplay: '[5], target=5',             callExpression: 'search([5], 5)',               expectedDisplay: '0',  expectedValue: 0  },
-    ],
-  },
-  starterCode: {
-    python: `def search(nums: list[int], target: int) -> int:
-    pass`,
-    javascript: `function search(nums, target) {
-
-}`,
-    java: `class Solution {
-    public int search(int[] nums, int target) {
-
-    }
-}`,
-    cpp: `class Solution {
-public:
-    int search(vector<int>& nums, int target) {
-
-    }
-};`,
-  },
-  solutions: {
-    python: {
-      timeComplexity: 'O(log n)',
-      spaceComplexity: 'O(1)',
-      code: `def search(nums: list[int], target: int) -> int:
+  solution: {
+    timeComplexity: 'O(log n)',
+    spaceComplexity: 'O(1)',
+    code: `def search(nums: list[int], target: int) -> int:
     left, right = 0, len(nums) - 1
     while left <= right:
         mid = (left + right) // 2
@@ -139,65 +112,5 @@ public:
         else:
             right = mid - 1
     return -1`,
-    },
-    javascript: {
-      timeComplexity: 'O(log n)',
-      spaceComplexity: 'O(1)',
-      code: `function search(nums, target) {
-    let left = 0, right = nums.length - 1;
-    while (left <= right) {
-        const mid = Math.floor((left + right) / 2);
-        if (nums[mid] === target) {
-            return mid;
-        } else if (nums[mid] < target) {
-            left = mid + 1;
-        } else {
-            right = mid - 1;
-        }
-    }
-    return -1;
-}`,
-    },
-    java: {
-      timeComplexity: 'O(log n)',
-      spaceComplexity: 'O(1)',
-      code: `class Solution {
-    public int search(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return -1;
-    }
-}`,
-    },
-    cpp: {
-      timeComplexity: 'O(log n)',
-      spaceComplexity: 'O(1)',
-      code: `class Solution {
-public:
-    int search(vector<int>& nums, int target) {
-        int left = 0, right = nums.size() - 1;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return -1;
-    }
-};`,
-    },
   },
 };

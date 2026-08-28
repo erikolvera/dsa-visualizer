@@ -18,7 +18,7 @@ export function generateMergeSortedListsSteps(input: Record<string, unknown>): S
   steps.push({
     stepIndex: 0,
     description: `Merge two sorted lists: [${list1.join('→')}] and [${list2.join('→')}]. We compare the front of each list, append the smaller value to the merged list, and advance that pointer.`,
-    highlightLines: { python: [2, 3, 4], javascript: [2, 3, 4], java: [3, 4, 5], cpp: [8, 9, 10] },
+    highlightLines: [2, 3, 4],
     visualState: {
       list1, list2, merged: [], ptr1: list1.length > 0 ? 0 : null,
       ptr2: list2.length > 0 ? 0 : null, phase: 'init',
@@ -34,7 +34,7 @@ export function generateMergeSortedListsSteps(input: Record<string, unknown>): S
     steps.push({
       stepIndex: steps.length,
       description: `Compare list1[${i}]=${list1[i]} vs list2[${j}]=${list2[j]}. ${pick1 ? `${list1[i]} ≤ ${list2[j]}, pick from list1.` : `${list2[j]} < ${list1[i]}, pick from list2.`}`,
-      highlightLines: { python: [5, 6], javascript: [5, 6], java: [6, 7], cpp: [11, 12] },
+      highlightLines: [5, 6],
       visualState: {
         list1, list2, merged: [...merged], ptr1: i, ptr2: j, phase: 'comparing',
       } satisfies MergeSortedListsVisualState,
@@ -51,7 +51,7 @@ export function generateMergeSortedListsSteps(input: Record<string, unknown>): S
     steps.push({
       stepIndex: steps.length,
       description: `Appended ${merged[merged.length - 1]} to merged list: [${merged.join('→')}].`,
-      highlightLines: { python: [7, 8], javascript: [7, 8], java: [8, 9], cpp: [13, 14] },
+      highlightLines: [7, 8],
       visualState: {
         list1, list2, merged: [...merged],
         ptr1: i < list1.length ? i : null,
@@ -66,7 +66,7 @@ export function generateMergeSortedListsSteps(input: Record<string, unknown>): S
     steps.push({
       stepIndex: steps.length,
       description: `list2 exhausted. Append remaining list1 elements: [${remaining.join('→')}].`,
-      highlightLines: { python: [9, 10], javascript: [9, 10], java: [10, 11], cpp: [15, 16] },
+      highlightLines: [9, 10],
       visualState: {
         list1, list2, merged: [...merged, ...remaining], ptr1: i, ptr2: null, phase: 'drain1',
       } satisfies MergeSortedListsVisualState,
@@ -79,7 +79,7 @@ export function generateMergeSortedListsSteps(input: Record<string, unknown>): S
     steps.push({
       stepIndex: steps.length,
       description: `list1 exhausted. Append remaining list2 elements: [${remaining.join('→')}].`,
-      highlightLines: { python: [11, 12], javascript: [11, 12], java: [12, 13], cpp: [17, 18] },
+      highlightLines: [11, 12],
       visualState: {
         list1, list2, merged: [...merged, ...remaining], ptr1: null, ptr2: j, phase: 'drain2',
       } satisfies MergeSortedListsVisualState,
@@ -90,7 +90,7 @@ export function generateMergeSortedListsSteps(input: Record<string, unknown>): S
   steps.push({
     stepIndex: steps.length,
     description: `Done! Merged list: [${merged.join('→')}]. Return the head of the merged linked list.`,
-    highlightLines: { python: [13], javascript: [14], java: [15], cpp: [19] },
+    highlightLines: [13],
     visualState: {
       list1, list2, merged: [...merged], ptr1: null, ptr2: null, phase: 'done',
     } satisfies MergeSortedListsVisualState,
@@ -98,25 +98,6 @@ export function generateMergeSortedListsSteps(input: Record<string, unknown>): S
 
   return steps;
 }
-
-const LISTNODE_SETUP = `
-class ListNode {
-  constructor(val, next = null) { this.val = val; this.next = next; }
-}
-function _toList(arr) {
-  let head = null, tail = null;
-  for (const v of arr) {
-    const node = new ListNode(v);
-    if (!tail) { head = tail = node; } else { tail.next = node; tail = node; }
-  }
-  return head;
-}
-function _toArray(node) {
-  const result = [];
-  while (node) { result.push(node.val); node = node.next; }
-  return result;
-}
-`;
 
 export const mergeTwoSortedLists: Problem = {
   id: 'merge-two-sorted-lists',
@@ -131,42 +112,10 @@ export const mergeTwoSortedLists: Problem = {
   ],
   defaultInput: { list1: [1, 2, 4], list2: [1, 3, 4] },
   generateSteps: generateMergeSortedListsSteps,
-  testRunner: {
-    setup: LISTNODE_SETUP,
-    cases: [
-      { label: 'Example 1', inputDisplay: '[1,2,4] + [1,3,4]', callExpression: '_toArray(mergeTwoLists(_toList([1,2,4]), _toList([1,3,4])))', expectedDisplay: '[1,1,2,3,4,4]', expectedValue: [1,1,2,3,4,4] },
-      { label: 'Both empty', inputDisplay: '[] + []',           callExpression: '_toArray(mergeTwoLists(_toList([]), _toList([])))',         expectedDisplay: '[]',          expectedValue: []          },
-      { label: 'One empty',  inputDisplay: '[] + [0]',          callExpression: '_toArray(mergeTwoLists(_toList([]), _toList([0])))',         expectedDisplay: '[0]',         expectedValue: [0]         },
-    ],
-  },
-  starterCode: {
-    python: `class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-def mergeTwoLists(list1, list2):
-    pass`,
-    javascript: `function mergeTwoLists(list1, list2) {
-
-}`,
-    java: `class Solution {
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-
-    }
-}`,
-    cpp: `class Solution {
-public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-
-    }
-};`,
-  },
-  solutions: {
-    python: {
-      timeComplexity: 'O(m + n)',
-      spaceComplexity: 'O(1)',
-      code: `def mergeTwoLists(list1, list2):
+  solution: {
+    timeComplexity: 'O(m + n)',
+    spaceComplexity: 'O(1)',
+    code: `def mergeTwoLists(list1, list2):
     dummy = ListNode(0)
     cur = dummy
     while list1 and list2:
@@ -179,71 +128,5 @@ public:
         cur = cur.next
     cur.next = list1 or list2
     return dummy.next`,
-    },
-    javascript: {
-      timeComplexity: 'O(m + n)',
-      spaceComplexity: 'O(1)',
-      code: `function mergeTwoLists(list1, list2) {
-    const dummy = new ListNode(0);
-    let cur = dummy;
-    while (list1 && list2) {
-        if (list1.val <= list2.val) {
-            cur.next = list1;
-            list1 = list1.next;
-        } else {
-            cur.next = list2;
-            list2 = list2.next;
-        }
-        cur = cur.next;
-    }
-    cur.next = list1 || list2;
-    return dummy.next;
-}`,
-    },
-    java: {
-      timeComplexity: 'O(m + n)',
-      spaceComplexity: 'O(1)',
-      code: `class Solution {
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode dummy = new ListNode(0);
-        ListNode cur = dummy;
-        while (list1 != null && list2 != null) {
-            if (list1.val <= list2.val) {
-                cur.next = list1;
-                list1 = list1.next;
-            } else {
-                cur.next = list2;
-                list2 = list2.next;
-            }
-            cur = cur.next;
-        }
-        cur.next = (list1 != null) ? list1 : list2;
-        return dummy.next;
-    }
-}`,
-    },
-    cpp: {
-      timeComplexity: 'O(m + n)',
-      spaceComplexity: 'O(1)',
-      code: `class Solution {
-public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode dummy(0);
-        ListNode* cur = &dummy;
-        while (list1 && list2) {
-            if (list1->val <= list2->val) {
-                cur->next = list1;
-                list1 = list1->next;
-            } else {
-                cur->next = list2;
-                list2 = list2->next;
-            }
-            cur = cur->next;
-        }
-        cur->next = list1 ? list1 : list2;
-        return dummy.next;
-    }
-};`,
-    },
   },
 };

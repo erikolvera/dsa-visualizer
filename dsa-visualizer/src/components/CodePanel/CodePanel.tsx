@@ -2,23 +2,21 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Problem } from '../../types';
 import { useProblemStore } from '../../store/useProblemStore';
-import { LanguageSelector } from './LanguageSelector';
 import { HighlightedCode } from './HighlightedCode';
-import { UserCodeEditor } from './UserCodeEditor';
 
 interface CodePanelProps {
   problem: Problem;
 }
 
-type Tab = 'description' | 'solution' | 'practice';
+type Tab = 'description' | 'solution';
 
 export function CodePanel({ problem }: CodePanelProps) {
-  const { language, stepIndex, steps } = useProblemStore();
+  const { stepIndex, steps } = useProblemStore();
   const [activeTab, setActiveTab] = useState<Tab>('solution');
 
   const currentStep = steps[stepIndex];
-  const highlightLines = currentStep ? (currentStep.highlightLines[language] ?? []) : [];
-  const solution = problem.solutions[language];
+  const highlightLines = currentStep?.highlightLines ?? [];
+  const solution = problem.solution;
 
   return (
     <div className="flex flex-col h-full bg-gray-950">
@@ -31,27 +29,17 @@ export function CodePanel({ problem }: CodePanelProps) {
           <TabButton active={activeTab === 'solution'} onClick={() => setActiveTab('solution')}>
             Solution
           </TabButton>
-          <TabButton active={activeTab === 'practice'} onClick={() => setActiveTab('practice')}>
-            Practice
-          </TabButton>
         </div>
 
-        {(activeTab === 'solution' || activeTab === 'practice') && solution && (
-          <div className="flex items-center gap-3">
-            {activeTab === 'solution' && (
-              <div className="flex items-center gap-3 text-sm text-gray-400">
-                <span>
-                  Time:{' '}
-                  <span className="text-blue-400 font-medium">{solution.timeComplexity}</span>
-                </span>
-                <span className="text-gray-600">·</span>
-                <span>
-                  Space:{' '}
-                  <span className="text-purple-400 font-medium">{solution.spaceComplexity}</span>
-                </span>
-              </div>
-            )}
-            <LanguageSelector />
+        {activeTab === 'solution' && solution && (
+          <div className="flex items-center gap-3 text-sm text-gray-400">
+            <span>
+              Time: <span className="text-blue-400 font-medium">{solution.timeComplexity}</span>
+            </span>
+            <span className="text-gray-600">·</span>
+            <span>
+              Space: <span className="text-purple-400 font-medium">{solution.spaceComplexity}</span>
+            </span>
           </div>
         )}
       </div>
@@ -109,7 +97,7 @@ export function CodePanel({ problem }: CodePanelProps) {
                 </div>
               )}
             </motion.div>
-          ) : activeTab === 'solution' ? (
+          ) : (
             <motion.div
               key="solution"
               initial={{ opacity: 0 }}
@@ -119,23 +107,8 @@ export function CodePanel({ problem }: CodePanelProps) {
               className="absolute inset-0 overflow-auto px-4"
             >
               {solution && (
-                <HighlightedCode
-                  code={solution.code}
-                  language={language}
-                  highlightLines={highlightLines}
-                />
+                <HighlightedCode code={solution.code} highlightLines={highlightLines} />
               )}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="practice"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className="absolute inset-0 flex flex-col"
-            >
-              <UserCodeEditor problem={problem} />
             </motion.div>
           )}
         </AnimatePresence>

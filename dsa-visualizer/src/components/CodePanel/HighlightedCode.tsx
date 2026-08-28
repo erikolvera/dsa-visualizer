@@ -1,24 +1,15 @@
-import { Highlight, themes, type Language as PrismLang } from 'prism-react-renderer';
+import { Highlight, themes } from 'prism-react-renderer';
 
 interface HighlightedCodeProps {
   code: string;
-  language: string;
   highlightLines: number[];
 }
 
-const LANGUAGE_MAP: Record<string, PrismLang> = {
-  python: 'python',
-  javascript: 'javascript',
-  java: 'java',
-  cpp: 'cpp',
-};
-
-export function HighlightedCode({ code, language, highlightLines }: HighlightedCodeProps) {
-  const prismLang = LANGUAGE_MAP[language] ?? 'python';
+export function HighlightedCode({ code, highlightLines }: HighlightedCodeProps) {
   const highlightSet = new Set(highlightLines);
 
   return (
-    <Highlight theme={themes.vsDark} code={code.trim()} language={prismLang}>
+    <Highlight theme={themes.vsDark} code={code.trim()} language="python">
       {({ style, tokens, getLineProps, getTokenProps }) => (
         <pre
           className="text-sm leading-6 overflow-auto flex-1 py-4"
