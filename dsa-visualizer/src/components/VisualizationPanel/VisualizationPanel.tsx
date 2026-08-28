@@ -125,7 +125,7 @@ export function VisualizationPanel({ problem, steps, onInputChange }: Visualizat
       <Controls />
 
       {/* Visualizer */}
-      <div className="flex-1 min-h-0 overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={stepIndex}
